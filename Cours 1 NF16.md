@@ -115,7 +115,7 @@ On se place dans le cas où $b_{n} -a_{n} \xrightarrow[n \to \infty]{}0$.
 Puisque pour tout $n \in \mathbb{N}$, $I_{n+1}\subset I_n$, on a $a_{0} \leq a_{n} \leq a_{n+1} \leq b_{n+1}\leq b_{n} \leq b_{0}$. Ainsi $(a_{n})$ est croissante majorée et $(b_{n})$ est décroissante minorée. Donc par le théorème de la limite monotone elles convergent vers une même limite $x \in I_{0}$.
 
 On a $\{ x \} \subset \bigcap_{n \in \mathbb{N}}I_{n}$ car pour tout $n \in \mathbb{N}$, $a_{n} \leq x \leq b_{n}$, et donc $x \in [a_{n},b_{n}]$.
-D'autre part $\bigcap_{n \in N}I_{n} \subset \{ x \}$ car pour $y \in \mathbb{R}$, $(\forall n \in \mathbb{N}, y \in I_{n}) \implies (y=x)$. (à démontrer par contraposition si ce n'est pas clair).
+D'autre part $\bigcap_{n \in N}I_{n} \subset \{ x \}$ car pour $y \in \mathbb{R}$, $(\forall n \in \mathbb{N}, y \in I_{n}) \implies (y=x)$. (la démontrer par contraposition si ce n'est pas clair).
 ***
 ##### Théorème (*de Bolzano-Weierstrass*)
 Toute suite bornée de réels admet une sous-suite convergente.
