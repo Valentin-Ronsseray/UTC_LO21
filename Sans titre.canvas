@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"84876c945b7e42e3","x":-24,"y":-85,"width":250,"height":60,"type":"text","text":"lolo"},
+		{"id":"a1898f0ecad1f1eb","x":140,"y":-280,"width":300,"height":80,"type":"text","text":"lolololo [[Cours 1 NF16]]"}
+	],
+	"edges":[
+		{"id":"2f398c8b0c622694","fromNode":"a1898f0ecad1f1eb","fromSide":"bottom","toNode":"84876c945b7e42e3","toSide":"top"}
+	]
+}
