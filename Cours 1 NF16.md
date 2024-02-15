@@ -9,7 +9,7 @@ La formule ci-contre donne la somme des $n$ premiers entiers :
 
 $$ \sum_{i=0}^n i = \frac{n(n+1)}{2} $$
 
-$$ \int_{a}^{b} f(x) \, dx = \lim_{ n \to \infty } \frac{b-a}{n}\sum_{i=0}^{n-1}f\left( a + \frac{b-a}{k} \right) $$
+$$ \int_{a}^{b} f(x) \, \mathrm{d}x  = \lim_{ n \to \infty } \frac{b-a}{n}\sum_{i=0}^{n-1}f\left( a + \frac{b-a}{k} \right) $$
 
 $$ \sum_{i=0}^n i = \frac{n(n+1)}{2} $$
 
@@ -28,8 +28,6 @@ $$ \iiint $$
 $$ \frac{e^{ -xt }}{xt} \left< x,y \right>  = 0 $$
 
 $$ \sum_{n \in \mathbb{N}}^{}a_{n}z^n $$
-
-![[diagram-20240206 (1).svg#invert_B]]
 
 $$ \frac{1}{x}=o_{x\to \infty}(1) $$
 
@@ -153,3 +151,43 @@ Conclusion : on a la suite $(u_{\varphi(n)})$ construite (et également $(a_{n})
 
 Les suites $(a_{n})$ et $(b_{n})$ sont adjacentes car pour tout entier $n$, $a_{n} \leq b_{n}$, $(a_{n})$ est croissante, $(b_{n})$ est décroissante et $b_{n} - a_{n} = \frac{(b-a)}{2^n} \to 0$. Donc $(a_{n})$ et $(b_{n})$ convergent vers un réel $\ell$. Donc si on définit la suite de segments emboités $S_{n} := [a_{n}, b_{n}]$, on a alors $\lim_{ n \to \infty }\bigcap_{i=0}^{n}S_{i} = \{ \ell \}$ d'après le lemme des segments emboités. Cela implique la convergence de la suite $(u_{\varphi(n)})$ vers $\ell$.
 ***
+##### Propriété (*Unicité de la limite*)
+Soit $(u_{n})$ une suite numérique à valeurs réelles.
+Si $u_{n} \xrightarrow[n \to \infty]{}\ell$ et $u_{n} \xrightarrow[n \to \infty]{}\ell'$ alors $\ell = \ell'$.
+###### Démonstration
+Montrons le résultat par contraposée.
+
+Supposons que $\ell \neq \ell'$. Alors il existe $\varepsilon >0$ tel que $|\ell-\ell'| = \varepsilon$. Supposons également que $\ell <\ell'$.
+
+![[diagram-20240210.svg#invert_B]]
+
+On remarque que $\left[ \ell-\frac{\varepsilon}{3}, \ell+\frac{\varepsilon}{3} \right] \cap \left[ \ell'-\frac{\varepsilon}{3}, \ell'+\frac{\varepsilon}{3} \right] = \emptyset$ car $\ell+\frac{\varepsilon}{3} < \ell+\frac{\varepsilon}{2} = \ell' - \frac{\varepsilon}{2} < \ell' - \frac{\varepsilon}{3}$.
+De plus si $u_{n} \xrightarrow[n \to \infty]{}\ell$ et $u_{n} \xrightarrow[n \to \infty]{}\ell'$, alors pour $\varepsilon' = \frac{\varepsilon}{3}$, il existe $N \in \mathbb{N}$ tel que pour tout $n \geq N$, $|u_{n}-\ell| < \frac{\varepsilon}{3}$ et $|u_{n}-\ell'| < \frac{\varepsilon}{3}$ . Impossible car $\left[ \ell-\frac{\varepsilon}{3}, \ell+\frac{\varepsilon}{3} \right] \cap \left[ \ell'-\frac{\varepsilon}{3}, \ell'+\frac{\varepsilon}{3} \right] = \emptyset$.
+
+Conclusion : $\boxed{ \ell =\ell' }$.
+***
+##### Définition (*Ensemble fini*)
+Un ensemble $E$ non vide est *fini* s'il existe $n \in \mathbb{N}^*$ et $f$ une bijection de $\{ 1, \dots, n \}$ dans $E$.
+L'entier $n$ est appelé *cardinal de $E$* et est noté $\mathrm{Card}(E)$ (ou $\#E$, ou $|E|$).
+
+###### Remarque
+1. Par convention, $\emptyset$ est un ensemble fini et $\mathrm{Card}(E) = 0$.
+2. Un ensemble qui n'est pas fini est un ensemble *infini*.
+3. Intuitivement, le cardinal de $E$ représente le nombre d'éléments de cet ensemble.
+
+###### Exemple
+Soient $m,n$ deux entiers tel que $m=n$. Alors $\{ m, m+1,\dots,n \}$ est un ensemble fini de cardinal $m-n+1$. Considérer la fonction
+$$
+f : x \in \{ 1,\dots, n-m+1 \} \longmapsto m+x-1 \in \{ m,m+1,\dots,n \}
+$$
+***
+##### Définition (*Coefficients de Fourier et Série de Fourier*)
+
+Etant donnée une fonction $f:\mathbb{R}\to\mathbb{C}$ périodique de période $2\pi$ et bornée, on appelle *coefficients de Fourier complexes de $f$* les nombres complexes définis par
+$$
+\hat{f}_{k} = \frac{1}{2\pi}\int_{0}^{2\pi} f(x)e^{ -ikx } \, \mathrm{d}x.
+$$
+On appelle *série de Fourier* de $f$ la série formelle
+$$
+f(x)\sim\sum_{k=-\infty}^\infty\hat{f}_ke^{ikx}.
+$$
