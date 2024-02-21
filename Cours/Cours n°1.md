@@ -64,18 +64,18 @@ Une classe est une abstraction d'un objet. Un objet est une instance d'une class
 using namespace std; //  espace de noms utilisé par les bibliothèques standard
 int main(){ // point d'entrée du programme
 	cout.operator << ("Bonjour !\n");
-	cout << "Hello World !";
+	cout << "Hello World !\n";
 	cout << "What is your name ?\n";
 	string name; // instanciation de la classe string. name est un objet de la classe stream, ie une chaîne de caractères
 	cin >> name;
-	cout << "Hello" << name << "\n";
+	cout << "Hello " << name << "\n";
 	return 0; // fin de la fonction
 }
 ```
 
 ###### Remarque
 - Les fichiers d'entête des bibliothèques standards n'ont pas d'extension
-- Tous les identificateurs notées dans l'espace de nom `std` sont visibles comme s'ils étaient dans la protée générale.
+- Tous les identificateurs notées dans l'espace de nom `std` sont visibles comme s'ils étaient dans la portée générale.
 - `cout` est un objet instance de la classe `ostream` et qui représente la sortie standard.
 - `cin` est un objet instance de la classe `ostream` et qui représente l'entrée standard.
 - L'envoi d'un message correspond à écrire une chaîne de caractères sur la sortie standard
