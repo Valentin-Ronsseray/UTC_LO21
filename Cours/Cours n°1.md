@@ -11,6 +11,7 @@
 		- [[#II.2. Attributs et opérations|II.2. Attributs et opérations]]
 				- [[#Définition (*Attribut*)|Définition (*Attribut*)]]
 		- [[#II.3. Classes|II.3. Classes]]
+				- [[#Définition (*Classe*)|Définition (*Classe*)]]
 					- [[#Remarque|Remarque]]
 	- [[#III. L'approche orientée objet|III. L'approche orientée objet]]
 		- [[#III.1. Approche objet|III.1. Approche objet]]
@@ -46,6 +47,9 @@ Un *attribut* est une information caractérisant l'objet qui prend une valeur da
 
 ### II.3. Classes
 
+##### Définition (*Classe*)
+Une *classe* est un ensemble d'objets partageant les mêmes attributs (pas nécessairement les mêmes valeurs)
+
 ###### Remarque
 Une classe est une abstraction d'un objet. Un objet est une instance d'une classe.
 
@@ -77,7 +81,7 @@ int main(){ // point d'entrée du programme
 - Les fichiers d'entête des bibliothèques standards n'ont pas d'extension
 - Tous les identificateurs notées dans l'espace de nom `std` sont visibles comme s'ils étaient dans la portée générale.
 - `cout` est un objet instance de la classe `ostream` et qui représente la sortie standard.
-- `cin` est un objet instance de la classe `ostream` et qui représente l'entrée standard.
+- `cin` est un objet instance de la classe `istream` et qui représente l'entrée standard.
 - L'envoi d'un message correspond à écrire une chaîne de caractères sur la sortie standard
 - Un objet est une variable, dont le type est une classe
 
