@@ -105,3 +105,7 @@ On a les trois cas suivants :
 - `T* const pt` : **pointeur constant** : le pointeur n'est pas modifiable mais la donnée oui (dans la suite du cours, on parlera de référence)
 - `const T* pt` : **pointeur "const"** : la donnée n'est pas modifiable mais la variable oui
 - `const T* const pt` : **pointeur constant "const"** : l'adresse et la valeur ne sont pas modifiables.
+
+> rreurs de c
+
+[[LO22_AI20_SdF_01_SdF_Intro.pdf#page=6&selection=38,1,38,12|LO22_AI20_SdF_01_SdF_Intro, page 6]]
