@@ -23,7 +23,6 @@
 					- [[#Exemple|Exemple]]
 		- [[#II.6. Donnée, identificateur, mémoire|II.6. Donnée, identificateur, mémoire]]
 		- [[#II.7. Adressage direct|II.7. Adressage direct]]
-				- [[#Théorème (*fondamental du génie logiciel*)|Théorème (*fondamental du génie logiciel*)]]
 		- [[#II.8. Les pointeurs "const" et les pointeurs constants|II.8. Les pointeurs "const" et les pointeurs constants]]
 				- [[#Définition (*Pointeurs "const" et pointeurs constants*)|Définition (*Pointeurs "const" et pointeurs constants*)]]
 
@@ -41,7 +40,7 @@ int z = static_cast<int> (3.14);
 
 ### I.4. Inclusion conditionnelle de fichier
 
-`#pragma_once`  parfois utilisé pour éviter les inclusions infinies mais très peu utilisé.
+`#pragma once`  parfois utilisé pour éviter les inclusions infinies mais très peu utilisé.
 
 ### I.5. Compilation
 
@@ -95,9 +94,6 @@ Si on a déclaré `x` et `y` entiers, alors `x*y` est une rvalue.
 
 ### II.7. Adressage direct
 
-##### Théorème (*fondamental du génie logiciel*)
-Tout problème logiciel peut être résolu par une interaction supplémentaire
-
 ### II.8. Les pointeurs "const" et les pointeurs constants
 
 ##### Définition (*Pointeurs "const" et pointeurs constants*)
@@ -105,7 +101,3 @@ On a les trois cas suivants :
 - `T* const pt` : **pointeur constant** : le pointeur n'est pas modifiable mais la donnée oui (dans la suite du cours, on parlera de référence)
 - `const T* pt` : **pointeur "const"** : la donnée n'est pas modifiable mais la variable oui
 - `const T* const pt` : **pointeur constant "const"** : l'adresse et la valeur ne sont pas modifiables.
-
-> rreurs de c
-
-[[LO22_AI20_SdF_01_SdF_Intro.pdf#page=6&selection=38,1,38,12|LO22_AI20_SdF_01_SdF_Intro, page 6]]
