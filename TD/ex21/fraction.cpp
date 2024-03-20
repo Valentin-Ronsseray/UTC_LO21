@@ -36,6 +36,31 @@ Fraction Fraction::somme(const Fraction& f) const {
     return Fraction(numerateur*f.denominateur + f.numerateur*denominateur, denominateur*f.denominateur);
 }
 
+Fraction Fraction::somme(const int n) const{
+    return somme(Fraction(n, 1));
+}
+
 Fraction MATH::somme(const Fraction& f1, const Fraction& f2){
     return Fraction(f1.getNumerateur()*f2.getDenominateur() + f2.getNumerateur()*f1.getDenominateur(), f1.getDenominateur()*f2.getDenominateur());
+}
+
+Fraction& Fraction::operator++(){ //prefixe
+    setFraction(getNumerateur() + getDenominateur(), getDenominateur());
+    return *this;
+}
+
+const Fraction Fraction::operator++(int){ //postfixe
+    Fraction f(getNumerateur(), getDenominateur());
+    setFraction(getNumerateur() + getDenominateur(), getDenominateur());
+    return f;
+}
+
+std::ostream& operator<< (std::ostream& F, const MATH::Fraction& frac){
+    F << frac.getNumerateur();
+    if (frac.getDenominateur() != 1)
+    {
+        F << "/" << frac.getDenominateur() << std::endl;
+        return F;
+    }
+    return F;
 }
