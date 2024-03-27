@@ -116,6 +116,16 @@ namespace Set {
 		Plateau& operator=(const Plateau& p);
 	};
 
+	ostream& operator<<(ostream& f, const Plateau& m);
+
+	class Combinaison
+	{
+	private:
+		/* data */
+	public:
+		Combinaison(/* args */);
+		~Combinaison();
+	};
 	
 
 }
