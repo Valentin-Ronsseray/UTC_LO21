@@ -4,7 +4,6 @@ void raz(personne* pers){
     for (int i = 0; i < 29; ++i) {
         pers->nom[i] = ' ';
     }
-    pers->nom[30] = '\0'; 
     pers->age = 0;    
 }
 

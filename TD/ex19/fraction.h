@@ -11,8 +11,8 @@ namespace MATH
         int denominateur;
         void simplification();
     public :
-        int getNumerateur() const {return numerateur;}
-        int getDenominateur() const {return denominateur;}
+        inline int getNumerateur() const {return numerateur;}
+        inline int getDenominateur() const {return denominateur;}
         void setFraction(int n, int d);
 
         Fraction somme(const Fraction& f) const; // On ne change pas les attributs, ni la fraction en paramètre
