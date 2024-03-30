@@ -7,7 +7,7 @@
 using namespace std;
 
 enum Sexe{
-    hommme, femme
+    homme, femme
 };
 
 enum Statut{
@@ -23,8 +23,8 @@ private:
     Sexe sexe;
     Statut situationFamiliale;
 public:
-    Personne(/* args */);
-    ~Personne();
+    Personne(/* args */) {};
+    ~Personne() {};
 };
 
 #endif // EX19

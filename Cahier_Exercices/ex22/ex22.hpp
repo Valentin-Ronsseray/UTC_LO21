@@ -1,5 +1,5 @@
-#ifndef EX20
-#define EX20
+#ifndef EX22
+#define EX22
 
 #include <iostream>
 #include <string>
@@ -29,8 +29,12 @@ public:
     inline Sexe getSexe() const {return sexe;};
     inline Statut getSituationFamiliale() const {return situationFamiliale;};
     unsigned int age(unsigned int annee) const;
-    Personne(/* args */) {};
+    Personne(const string& prenom, const string& nom, unsigned int anneeNaissance, Sexe sexe, Statut situationFamiliale) : prenom(prenom), nom(nom), anneeNaissance(anneeNaissance), sexe(sexe), situationFamiliale(situationFamiliale) {};
+    Personne() {};
     ~Personne() {};
 };
 
-#endif // EX20
+void fonction();
+void fonction2();
+
+#endif // EX22
