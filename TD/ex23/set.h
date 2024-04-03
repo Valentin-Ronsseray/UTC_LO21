@@ -38,23 +38,66 @@ ostream& operator<<(ostream& f, const Carte& c);
 
 class Jeu {
         public:
-            Jeu();
-            ~Jeu();
+            static Jeu& getInstance() {
+                if (handler.instance == nullptr) handler.instance = new Jeu;
+                return *handler.instance;
+            }
+            static void libererInstance() {
+                delete handler.instance;
+                handler.instance = nullptr;
+            }
             Jeu(const Jeu& j) = delete;
             Jeu& operator=(const Jeu& j) = delete;
             size_t getNbCartes() const { return 81; }
-            const Carte& getCarte(size_t i) const { if (i >= 81) throw SetException(" Carte invalide"); return *cartes[i]; }
+
+            class Iterator
+            {
+            private:
+                size_t i = 0;
+                friend class Jeu;
+                Iterator() = default;
+            public:
+                bool isDone() const{
+                    return i == Jeu::getInstance().getNbCartes();
+                }
+                void next(){
+                    if (isDone())
+                        throw SetException("Iterateur en fin de sequence");
+                    i++;
+                }
+                const Carte& currentItem() const{
+                    if(isDone())
+                        throw SetException("Iterateur en fin de séquence");
+                    return Jeu::getInstance().getCarte(i);
+                }
+            };
+        Iterator getIterator() const {return Iterator();}
+
         private:
+            friend class Iterator;
+            const Carte& getCarte(size_t i) const { if (i >= 81) throw SetException(" Carte invalide"); return *cartes[i]; }
+            struct Handler
+            {
+                Jeu* instance;
+                Handler() : instance(nullptr) {}
+                ~Handler() {delete instance;}
+            };
+        
+        static Handler handler;
+            
+            Jeu();
+            ~Jeu();
             const Carte* cartes[81];
         };
 
+
 class Pioche {
         public:
-            explicit Pioche(const Jeu& j);
+            // explicit Pioche(const Jeu& j);
             bool estVide() const { return nb == 0; }
             size_t getNbCartes() const { return nb; }
             const Carte& piocher();
-            Pioche() {};
+            Pioche();
             ~Pioche();
             Pioche(const Pioche& p) = delete;
             Pioche& operator=(const Pioche& p) = delete;
@@ -105,13 +148,13 @@ public:
     class Controleur
     {
     private:
-        Jeu jeu;
+        // Jeu jeu;
         Plateau plateau;
         Pioche* pioche = nullptr;
     public:
         void distribuer();
 
-        Controleur() : pioche(new Pioche(jeu)) {};
+        Controleur() : pioche(new Pioche) {};
         ~Controleur() {delete pioche;};
     };
     

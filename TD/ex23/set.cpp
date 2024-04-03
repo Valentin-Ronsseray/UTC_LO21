@@ -30,9 +30,14 @@ Jeu::~Jeu() {
         for (size_t i = 0; i < getNbCartes(); i++) delete cartes[i];
         }
 
-Pioche::Pioche(const Jeu& j) :cartes(new const Carte*[j.getNbCartes()]), nb(j.getNbCartes()) {
-        for (size_t i = 0; i < nb; i++) cartes[i] = &j.getCarte(i);
-    }
+// Pioche::Pioche(const Jeu& j) :cartes(new const Carte*[j.getNbCartes()]), nb(j.getNbCartes()) {
+//         for (size_t i = 0; i < nb; i++) cartes[i] = &j.getCarte(i);
+//     }
+
+Pioche::Pioche() : cartes(new const Carte* [Jeu::getInstance().getNbCartes()]), nb(Jeu::getInstance().getNbCartes()){
+    for (size_t i = 0; i < nb; i++)
+        cartes[i] = &Jeu::getInstance().getCarte(i);
+}
 
 const Carte& Pioche::piocher() {
         if (nb == 0) throw SetException("Pioche vide");
@@ -128,5 +133,7 @@ void Controleur::distribuer(){
         if (!pioche->estVide())
             plateau.ajouter(pioche->piocher());
 }
-    
+
+    Jeu::Handler Jeu::handler = Handler();
+
 }
