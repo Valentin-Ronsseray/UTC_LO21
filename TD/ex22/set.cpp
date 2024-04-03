@@ -1,155 +1,118 @@
 #include "set.h"
 
 namespace Set {
-	
-	std::initializer_list<Couleur> Couleurs = { Couleur::rouge, Couleur::mauve, Couleur::vert };
-	std::initializer_list<Nombre> Nombres = { Nombre::un, Nombre::deux, Nombre::trois };
-	std::initializer_list<Forme> Formes = { Forme::ovale, Forme::vague, Forme::losange };
-	std::initializer_list<Remplissage> Remplissages = { Remplissage::plein, Remplissage::vide, Remplissage::hachure };
 
-	string toString(Couleur c) {
-		switch (c) { 
-		case Couleur::rouge: return "R";
-		case Couleur::mauve: return "M";
-		case Couleur::vert: return "V";
-		default: throw SetException("Couleur inconnue");
-		}
-	}
+ostream& operator<<(ostream& f, const Carte& c)
+    { string n[3] {"1","2","3"};
+      string cou[3] {"M","V","R"};
+      string fm[3] {"O","~","L"};
+      string rp[3] {"P","_","H"};
+    f << "(" << n[c.getNombre()] << "," << cou[c.getCouleur()]<<"," <<fm[c.getForme()]<<","<< rp[c.getRemplissage()] << ")";
+    return f;
+    }
 
-	string toString(Nombre v) {
-		switch (v) {
-		case Nombre::un: return "1";
-		case Nombre::deux: return "2";
-		case Nombre::trois: return "3";
-		default: throw SetException("Nombre inconnue");
-		}
-	}
+Jeu::Jeu() {
 
-	string toString(Forme f) {
-		switch (f) {
-		case Forme::ovale: return "O";
-		case Forme::vague: return "~";
-		case Forme::losange: return "\004";
-		default: throw SetException("Forme inconnue");
-		}
-	}
+        Couleur touCoul[] {mauve, vert, rouge};
+        Nombre touNb[] {un, deux, trois};
+        Forme touForm[] {ovale, vague, losange};
+        Remplissage touRempl[] {plein, vide, hachure};
+        size_t j = 0;
 
-	string toString(Remplissage r) {
-		switch (r) {
-		case Remplissage::plein: return "P";
-		case Remplissage::vide: return "_";
-		case Remplissage::hachure: return "H";
-		default: throw SetException("Remplissage inconnu");
-		}
-	}
+        for (auto c : touCoul)
+            for (auto v : touNb)
+                for (auto f : touForm)
+                    for (auto r : touRempl)
+                        cartes[j++] = new Carte(c, v, f, r);
 
-	std::ostream& operator<<(std::ostream& f, Couleur c) { f << toString(c); return f; }
-	std::ostream& operator<<(std::ostream& f, Nombre v) {	f << toString(v); return f; }
-	std::ostream& operator<<(std::ostream& f, Forme x) { f << toString(x);  return f; }
-	std::ostream& operator<<(std::ostream& f, Remplissage r) { f << toString(r); return f; }
+    }
+Jeu::~Jeu() {
+        for (size_t i = 0; i < getNbCartes(); i++) delete cartes[i];
+        }
 
-	void printCouleurs(std::ostream& f) {
-		for (auto c : Couleurs) f << c << " ";
-		f << "\n";
-	}
+Pioche::Pioche(const Jeu& j) :cartes(new const Carte*[j.getNbCartes()]), nb(j.getNbCartes()) {
+        for (size_t i = 0; i < nb; i++) cartes[i] = &j.getCarte(i);
+    }
 
-	void printNombres(std::ostream& f) {
-		for (auto v : Nombres) f << v << " ";
-		f << "\n";
-	}
+const Carte& Pioche::piocher() {
+        if (nb == 0) throw SetException("Pioche vide");
+        size_t x = rand() % nb;
+        const Carte* c = cartes[x];
+        for (size_t i = x + 1; i < nb; i++) cartes[i - 1] = cartes[i];
+        nb--;
+        return *c;
+    }
 
-	void printFormes(std::ostream& f) {
-		for (auto x : Formes) f << x << " ";
-		f << "\n";
-	}
+Pioche::~Pioche() {  delete[] cartes; }
 
-	void printRemplissages(std::ostream& f) {
-		for (auto r : Remplissages) f << r << " ";
-		f << "\n";
-	}
+void Plateau::ajouter(const Carte& c) {
+        if (nb == nbMax)
+            {
+            const Carte** newtab = new const Carte*[(nbMax + 1) * 2];
+            for (size_t i = 0; i < nb; i++) newtab[i] = cartes[i];
+            auto old = cartes;       cartes = newtab;   delete[] old;
+            nbMax = (nbMax + 1) * 2;
+            }
+        cartes[nb++] = &c;
+    }
 
-	Jeu::Jeu(){
-		int i = 0;
-			for (auto c:Couleurs)
-				for (auto v:Nombres)
-					for (auto f:Formes)
-						for (auto r:Remplissages)
-							cartes[i++] = new Carte(c,v,f,r);
-	}
+void Plateau::retirer(const Carte& c) {
+        size_t i = 0;
+        while (i < nb && cartes[i] != &c) i++;
+        if (i == nb) throw SetException("Carte inexistante");
+        i++;
+        while (i < nb) { cartes[i - 1] = cartes[i]; i++;  }
+        nb--;
+   }
 
-	Jeu::~Jeu(){
-		for (size_t i = 0; i < getNbCartes(); i++) delete cartes[i];
-	}
+void Plateau::print(ostream& f) const
+    //afficher le plateau en lignes de 4 cartes
+    {
+        for (size_t i = 0; i < nb; i++)
+           { if (i % 4 == 0)
+                f << "\n";
+              f << *cartes[i] << " ";
+            }
+        f << "\n";
+    }
 
-	Pioche::Pioche(const Jeu& j) : cartes(new const Carte*[j.getNbCartes()]), nb(j.getNbCartes())
-	{
-		for (size_t i = 0; i < nb; i++)
-		{
-			cartes[i] = &(j.getCarte(i));
-		};	
-	}
+ostream& operator<<(ostream& f, const Plateau& m)
+    {   m.print(f);
+       return f;
+    }
 
-	Pioche::~Pioche()
-	{
-		delete[] cartes;
-	}
+Plateau::Plateau(const Plateau& p):cartes(new const Carte*[p.nb]),nb(p.nb),nbMax(p.nb) {
+    for (size_t i = 0; i < nb; i++) cartes[i] = p.cartes[i];
+    }
 
-	const Carte& Pioche::piocher()
-	{
-		if (nb == 0) throw SetException("Pioche vide");
-		size_t x = rand() % nb; // on tire une position entre 0 et nb-1
-		const Carte* c = cartes[x]; // on retient l'adresse
-		for (size_t i = x + 1; i < nb; i++) cartes[i-1] = cartes[i]; // on décale toutes les cartes aux rangs suivants
-		nb--;
-		return *c;
-	}
+Plateau& Plateau::operator=(const Plateau& p) {
+    if (this != &p) {
+        if (p.nb > nbMax) {
+            const Carte** newtab = new const Carte*[p.nb];
+            for (size_t i = 0; i < nb; i++) newtab[i] = p.cartes[i];
+            auto old = cartes;  cartes = newtab;  delete[] old;
+            nb=nbMax = p.nb;
+            }
+        else {
+            for (size_t i = 0; i < nb; i++) cartes[i] = p.cartes[i];
+            nb = p.nb;
+            }
+       }
+    return *this;
+    }
 
-	void Plateau::ajouter(const Carte& c)
-	{
-		if (nb == nbMax)
-		{
-			const Carte** newtab = new const Carte*[(nbMax + 1)*2];
-			for (size_t i = 0; i < nb; i++)
-			{
-				newtab[i] = cartes[i];
-			}
-			auto old = cartes; cartes = newtab; delete[] old;
-			nbMax = (nbMax + 1)*2;			
-		}
-		cartes[nb++] = &c;
-		
-	}
+bool Combinaison::estUnSET() const{
+    // c est vrai si couleurs toutes identiques
+    // ou bien si couleurs toutes différentes
+    bool c = (c1->getCouleur() == c2->getCouleur() && c1->getCouleur() == c3->getCouleur()) || (c1->getCouleur() != c2->getCouleur() && c1->getCouleur() != c3->getCouleur() && c2->getCouleur() != c3->getCouleur());
+    
+    bool n = (c1->getNombre() == c2->getNombre() && c1->getNombre() == c3->getNombre()) || (c1->getNombre() != c2->getNombre() && c1->getNombre() != c3->getNombre() && c2->getNombre() != c3->getNombre());
 
-	void Plateau::retirer(const Carte& c)
-	{
-		size_t i = 0; while (i < nb && cartes[i] != &c) i++;
-		if (i == nb) throw SetException("Carte inexistante");
-		i++; while (i < nb) {cartes[i-1] = cartes[i]; i++;} // décaler les suivantes
-		nb--;
-	}
+    bool f = (c1->getForme() == c2->getForme() && c1->getForme() == c3->getForme()) || (c1->getForme() != c2->getForme() && c1->getForme() != c3->getForme() && c2->getForme() != c3->getForme());
 
-	Plateau::Plateau(const Plateau& p) : cartes(new const Carte*[p.nb]), nb(p.nb), nbMax(p.nb)
-	{
-		for (size_t i = 0; i < nb; i++) cartes[i] = p.cartes[i];
-	}
+    bool r = (c1->getRemplissage() == c2->getRemplissage() && c1->getRemplissage() == c3->getRemplissage()) || (c1->getRemplissage() != c2->getRemplissage() && c1->getRemplissage() != c3->getRemplissage() && c2->getRemplissage() != c3->getRemplissage());
 
-	Plateau& Plateau::operator=(const Plateau& p)
-	{
-		if (this != &p)
-		{
-			if (p.nb > nbMax)
-			{
-				const Carte** newtab = new const Carte*[p.nb];
-				for (size_t i = 0; i < nb; i++) newtab[i] = p.cartes[i];
-				auto old = cartes; cartes = newtab; delete[] old;
-				nb = nbMax = p.nb;
-			}
-			else
-			{
-				for (size_t i = 0; i < nb; i++) cartes[i] = p.cartes[i];
-				nb = p.nb;
-			}
-		}
-		return *this;
-	}
+    return c && n && f && r;
+}
+
 }

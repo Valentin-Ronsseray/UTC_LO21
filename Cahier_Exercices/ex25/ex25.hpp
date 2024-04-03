@@ -1,5 +1,5 @@
-#ifndef EX24
-#define EX24
+#ifndef EX25
+#define EX25
 
 #include <iostream>
 #include <string>
@@ -23,6 +23,7 @@ private:
     unsigned int anneeNaissance;
     Sexe sexe;
     Statut situationFamiliale;
+    Personne* conjoint = nullptr;
 public:
     inline string getNom() const {return nom;};
     inline string getPrenom() const {return prenom;};
@@ -32,11 +33,13 @@ public:
     unsigned int age(unsigned int annee) const;
     string retourneInfos() const;
     Personne(const string& prenom, const string& nom, unsigned int anneeNaissance, Sexe sexe, Statut situationFamiliale) : prenom(prenom), nom(nom), anneeNaissance(anneeNaissance), sexe(sexe), situationFamiliale(situationFamiliale) {};
+    void mariageAvec(Personne& c);
+    void divorce();
     Personne() {};
-    ~Personne() {};
+    ~Personne() {if (conjoint != nullptr) {conjoint->conjoint = nullptr; conjoint->situationFamiliale = veuf;}};
 };
 
 void fonction();
 void fonction2();
 
-#endif // EX24
+#endif // EX25
