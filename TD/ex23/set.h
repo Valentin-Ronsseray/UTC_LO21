@@ -93,7 +93,7 @@ class Jeu {
 
 class Pioche {
         public:
-            // explicit Pioche(const Jeu& j);
+            explicit Pioche(const Jeu& j);
             bool estVide() const { return nb == 0; }
             size_t getNbCartes() const { return nb; }
             const Carte& piocher();

@@ -12,6 +12,11 @@ int main()
     ++f3;
     // f3.setFraction(somme(f1, f2).getNumerateur(), somme(f1,f2).getDenominateur()) ;
     std::cout << f3.getNumerateur() << "/" << f3.getDenominateur() << "\n";
-    std::cout << f3;
+    std::cout << f3 << "\n";
+
+    int* p = new int(25);
+    std::cout << *p << "\n";
+    delete p;
+
     return 0;
 }
