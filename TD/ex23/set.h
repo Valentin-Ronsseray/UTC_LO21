@@ -12,11 +12,11 @@ enum Remplissage {plein, vide, hachure};
 
 
 class SetException {
-                char info[256];
-                public:
-                SetException(const char* str){ std::strcpy(info,str); }
-                const char* getInfo() const { return info; }
-                };
+        char info[256];
+        public:
+        SetException(const char* str){ std::strcpy(info,str); }
+        const char* getInfo() const { return info; }
+        };
 class Carte {
         public:
         Carte(Couleur c, Nombre v, Forme f, Remplissage r) :couleur(c), nombre(v), forme(f), remplissage(r) {}
