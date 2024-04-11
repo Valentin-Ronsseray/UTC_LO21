@@ -1,13 +1,15 @@
-#include "header.hpp"
+#include <iostream>
+#include <typeinfo>
 
-int main(int argc, char const *argv[])
-{
-    maClasse n;
-    cout << n.maClasse::entier() << "\n";
-    cout << n.maClasse::doubleEntier() << "\n";
+class MyClass {
+    // Définition de la classe
+};
+
+int main() {
+    MyClass obj;
+
+    // Obtention du nom de la classe de l'instance
+    std::cout << "Le nom de la classe est : " << typeid(obj).name() << std::endl;
+
     return 0;
-}
-
-bool f(){
-    return true;
 }
