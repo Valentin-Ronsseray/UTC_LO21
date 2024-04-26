@@ -9,7 +9,6 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     QWidget fenetre;
     fenetre.setFixedSize(250, 120);
-
     QLabel* etqNom = new QLabel ("Nom", &fenetre);
     QLabel* etq = new QLabel ("OK", &fenetre);
     // etqNom->move(10, 10);
