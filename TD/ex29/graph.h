@@ -7,6 +7,7 @@
 #include<string>
 #include<string>
 #include<stdexcept>
+#include<algorithm>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ class Graph {
     vector<list<unsigned int> > adj;
     string name;
 public:
-    Graph(const string& n, size_t nb);
+    Graph(const string& n, size_t nb) : name(n), adj(nb) {};
     const string& getName() const {return name;};
     size_t getNbVertices() const {return adj.size();};
     size_t getNbEdges() const;

@@ -1,11 +1,5 @@
 #include "graph.h"
 
-Graph::Graph(const string& n, size_t nb){
-    name = n;
-    vector<list<unsigned int>> adjacence(nb, list<unsigned int>(0));
-    adj = adjacence;
-}
-
 size_t Graph::getNbEdges() const{
     size_t out = 0;
     unsigned int len = adj.size();
@@ -17,14 +11,26 @@ size_t Graph::getNbEdges() const{
 }
 
 void Graph::addEdge(unsigned int i, unsigned int j){
+    if(i>=getNbVertices() || j>=getNbVertices())
+        throw GraphException("addEdge: vertex out of range");
+    if(find(adj[i].begin(), adj[i].end(), j) != adj[i].end())
+        throw GraphException("addEdge: edge already exists");
     adj[i].push_back(j);
 }
 
 void Graph::removeEdge(unsigned int i, unsigned int j){
-    adj[i].remove(j);
+    if(i>=getNbVertices() || j>=getNbVertices())
+        throw GraphException("addEdge: vertex out of range");
+    list<unsigned int>::iterator it = find(adj[i].begin(), adj[i].end(), j);
+    if (it != adj[i].end()){
+        adj[i].erase(it);
+    }
+    else throw "bad argument.";
 }
 
 const list<unsigned int>& Graph::getSuccessors(unsigned int i) const{
+    if (i >= getNbVertices())
+        throw GraphException("getSuccessors: vertex out of range");
     return adj[i];
 }
 
@@ -45,6 +51,18 @@ const list<unsigned int> Graph::getPredecessors(unsigned int i) const{
 }
 
 ostream& operator<<(ostream& f, const Graph& G){
-    f << G.getName()
+    size_t len = G.getNbVertices();
+    f << "graph " << G.getName() << " (" << G.getNbVertices() << " vertices and " << G.getNbEdges() << " edges)" << endl;
+    for (size_t i = 0; i < len; i++)
+    {
+        f << i <<":";
+        for (auto j = G.getSuccessors(i).begin(); j != G.getSuccessors(i).end(); j++)
+        {
+            f << *j << " ";
+        }
+        f << endl;
+         
+    }
+    
     return f;
 }
