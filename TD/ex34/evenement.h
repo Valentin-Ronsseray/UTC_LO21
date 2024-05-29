@@ -9,22 +9,31 @@
 using namespace std;
 
 namespace TIME {
-    class Evt1j {
+
+    class Evt { // Abstraite
+        private :
+            string sujet;
+        public :
+            Evt(const std::string& s): sujet(s) {};
+            virtual void afficher(ostream& f=cout) const = 0;
+            virtual Evt* dupliquer() const = 0;
+            const string& getDescription() const {return sujet;}
+    };
+
+    class Evt1j : public Evt {
     private:
         Date date;
-        string sujet;
-
     public:
-        Evt1j(const Date& d, const string& s): date(d), sujet(s) {cout << "construction d'un objet de la classe Evt1j" << "\n";}
+        Evt1j(const Date& d, const string& s): Evt(s), date(d) {cout << "construction d'un objet de la classe Evt1j" << "\n";}
         virtual ~Evt1j() {cout << "destruction d'un objet de la classe Evt1j" << "\n";}
-
-        const string& getDescription() const {return sujet;}
 
         const Date& getDate() const {return date;}
 
-        virtual void afficher(ostream& f = cout) const {
-            f << "***** Evt ********" << "\n" << "Date=" << date << " sujet=" << sujet << "\n";
+        void afficher(ostream& f = cout) const override {
+            Evt::afficher(f);
+            f << "Date=" << date << " sujet=" << Evt::getDescription() << "\n";
         }
+        Evt1j* dupliquer() const;
     };
 
     class Evt1jDur : public Evt1j
@@ -42,6 +51,8 @@ namespace TIME {
             Evt1j::afficher(f);
             f << "Horaire=" << horaire << " duree=" << duree << "\n";
         }
+        Evt1jDur* dupliquer() const;
+
     };
 
     class Rdv : public Evt1jDur
@@ -59,24 +70,54 @@ namespace TIME {
             Evt1jDur::afficher(f);
             f << "Personne=" << personne << " Lieu=" << lieu << "\n";
         }
+        Rdv* dupliquer() const;
+    };
+
+    class EvtPj : public Evt {
+    private:
+        Date debut;
+        Date fin;
+    public:
+        EvtPj(const Date& d, const Date& f, const string& s): Evt(s), debut(d), fin(f) {}
+        virtual ~EvtPj() {cout << "destruction d'un objet de la classe EvtPj" << "\n";}
+
+        const Date& getDateDebut() const {return debut;}
+        const Date& getDateFin() const {return fin;}
+        
+        void afficher(ostream& f = cout) const override {
+            f << "***** Evt ********" << "\n" << "Date debut=" << debut << " Date fin=" << fin << " sujet=" << Evt::getDescription() << "\n";
+            f << endl << endl;
+        }
+        EvtPj* dupliquer() const;
+
     };
 
     class Agenda {
     private:
-        vector<Evt1j*> evts;
+        vector<Evt*> evts;
     public:
+
+        class iterator : public vector<Evt*>::iterator {
+        public:
+
+        private:
+            friend class Agenda;
+        };
+
         Agenda() = default;
-        ~Agenda() = default;
+        ~Agenda() {};
         Agenda(const Agenda& a) = delete;
         Agenda& operator=(const Agenda& a) = delete;
-        Agenda& operator<<(Evt1j& e);
-        vector<Evt1j*> getEvenements() const {return evts;}
+        Agenda& operator<<(Evt& e);
+        vector<Evt*> getEvenements() const {return evts;}
         void afficher(std::ostream& f=std::cout) const;
     };
 }
 
+ostream& operator<<(ostream& f, const TIME::Evt& e);
 ostream& operator<<(ostream& f, const TIME::Evt1j& e);
 ostream& operator<<(ostream& f, const TIME::Evt1jDur& e);
+ostream& operator<<(ostream& f, const TIME::EvtPj& e);
 ostream& operator<<(ostream& f, const TIME::Rdv& e);
 
 #endif

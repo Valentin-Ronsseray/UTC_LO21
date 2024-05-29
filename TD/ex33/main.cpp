@@ -12,7 +12,7 @@ int main(){
 
     a << e1 << e2;
 
-    // a.afficher();
+    a.afficher();
 
     // std::cin.get(); // Pause
     return 0;

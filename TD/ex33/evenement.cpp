@@ -20,7 +20,7 @@ TIME::Agenda& TIME::Agenda::operator<<(Evt1j& e){
     return *this;
 }
 
-void TIME::Agenda::afficher(std::ostream& f=std::cout) const {
+void TIME::Agenda::afficher(std::ostream& f) const {
     cout << "Agenda:" << "\n";
     for(auto e : evts){
         f << *e;
