@@ -61,6 +61,6 @@ namespace TIME {
     };
 }
 
-    ostream& operator<<(ostream&, TIME::Evt1j&);
+ostream& operator<<(ostream& f, TIME::Evt1j& e)
 
 #endif
