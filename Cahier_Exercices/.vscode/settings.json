@@ -1,9 +1,12 @@
 {
     "files.associations": {
+        "*.ejs": "html",
         "string": "cpp",
         "iostream": "cpp",
         "functional": "cpp",
         "new": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "ostream": "cpp",
+        "typeinfo": "cpp"
     }
 }

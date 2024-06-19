@@ -1,29 +1,29 @@
 #include "evenement.h"
 
+
 ostream& operator<<(ostream& f, const TIME::Evt& e){
     e.afficher(f);
     return f;
 }
+// ostream& operator<<(ostream& f, const TIME::Evt1j& e){
+//     e.afficher(f);
+//     return f;
+// }
 
-ostream& operator<<(ostream& f, const TIME::Evt1j& e){
-    e.afficher(f);
-    return f;
-}
+// ostream& operator<<(ostream& f, const TIME::Evt1jDur& e){
+//     e.afficher(f);
+//     return f;
+// }
 
-ostream& operator<<(ostream& f, const TIME::Evt1jDur& e){
-    e.afficher(f);
-    return f;
-}
+// ostream& operator<<(ostream& f, const TIME::Rdv& e){
+//     e.afficher(f);
+//     return f;
+// }
 
-ostream& operator<<(ostream& f, const TIME::Rdv& e){
-    e.afficher(f);
-    return f;
-}
-
-ostream& operator<<(ostream& f, const TIME::EvtPj& e){
-    e.afficher(f);
-    return f;
-}
+// ostream& operator<<(ostream& f, const TIME::EvtPj& e){
+//     e.afficher(f);
+//     return f;
+// }
 
 TIME::Agenda& TIME::Agenda::operator<<(Evt& e){
     evts.push_back(e.dupliquer());
@@ -33,7 +33,7 @@ TIME::Agenda& TIME::Agenda::operator<<(Evt& e){
 void TIME::Agenda::afficher(std::ostream& f) const {
     f << "Agenda:" << "\n";
     for(auto e : evts){
-        f << *e;
+        f << e;
     }
 }
 

@@ -29,8 +29,7 @@ namespace TIME {
 
         const Date& getDate() const {return date;}
 
-        void afficher(ostream& f = cout) const override {
-            Evt::afficher(f);
+        virtual void afficher(ostream& f = cout) const {
             f << "Date=" << date << " sujet=" << Evt::getDescription() << "\n";
         }
         Evt1j* dupliquer() const;
@@ -43,11 +42,11 @@ namespace TIME {
         Horaire horaire;
     public:
         Evt1jDur(const Date& d, const string& s, const Horaire& h, const Duree& dur): Evt1j(d, s),horaire(h), duree(dur) {cout << "construction d'un objet de la classe Evt1jDur" << "\n";};
-        ~Evt1jDur() override {cout << "destruction d'un objet de la classe Evt1jDur" << "\n";};
+        ~Evt1jDur()  {cout << "destruction d'un objet de la classe Evt1jDur" << "\n";};
 
         const Horaire& getHoraire() const {return horaire;}
         const Duree& getDuree() const {return duree;}
-        void afficher(ostream& f = cout) const override{
+        void afficher(ostream& f = cout) const {
             Evt1j::afficher(f);
             f << "Horaire=" << horaire << " duree=" << duree << "\n";
         }
@@ -62,11 +61,11 @@ namespace TIME {
         string personne;
     public:
         Rdv(const Date& d, const string& s, const Horaire& h, const Duree& dur, const string& p, const string& l): Evt1jDur(d, s, h ,dur), personne(p), lieu(l) {cout << "construction d'un objet de la classe Rdv" << "\n";};
-        ~Rdv() override {cout << "destruction d'un objet de la classe Rdv" << "\n";};
+        ~Rdv()  {cout << "destruction d'un objet de la classe Rdv" << "\n";};
 
         const string& getLieu() const {return lieu;}
         const string& getPersonne() const {return personne;}
-        void afficher(ostream& f = cout) const override{
+        void afficher(ostream& f = cout) const {
             Evt1jDur::afficher(f);
             f << "Personne=" << personne << " Lieu=" << lieu << "\n";
         }
@@ -84,7 +83,7 @@ namespace TIME {
         const Date& getDateDebut() const {return debut;}
         const Date& getDateFin() const {return fin;}
         
-        void afficher(ostream& f = cout) const override {
+        void afficher(ostream& f = cout) const  {
             f << "***** Evt ********" << "\n" << "Date debut=" << debut << " Date fin=" << fin << " sujet=" << Evt::getDescription() << "\n";
             f << endl << endl;
         }
@@ -95,21 +94,21 @@ namespace TIME {
     class Agenda {
     private:
         vector<Evt*> evts;
-    public:
 
         class AgendaIterator{
         private:
-            Evt* current;
-            AgendaIterator(vector<Evt*>::AgendaIterator);
-        public:
-            AgendaIterator operator++();
-            AgendaIterator operator--();
-            bool operator!=(const AgendaIterator it);
-            Evt& operator*();
-
+            vector<Evt*>::iterator current;
+            AgendaIterator(const vector<Evt*>::iterator& it) : current(it) {};
             friend class Agenda;
+        public:
+            AgendaIterator operator++() {++current; return *this;}
+            AgendaIterator operator--() {--current; return *this;}
+            bool operator!=(const AgendaIterator& it) const {return current != it.current;};
+            Evt& operator*() {return **current;};
+
         };
 
+    public:
         Agenda() = default;
         ~Agenda() {};
         Agenda(const Agenda& a) = delete;
@@ -118,15 +117,15 @@ namespace TIME {
         vector<Evt*> getEvenements() const {return evts;}
         void afficher(std::ostream& f=std::cout) const;
 
-        AgendaIterator begin() const;
-        AgendaIterator end() const;
+        AgendaIterator begin() {return AgendaIterator(evts.begin());};
+        AgendaIterator end() {return AgendaIterator(evts.end());};
     };
 }
 
 ostream& operator<<(ostream& f, const TIME::Evt& e);
-ostream& operator<<(ostream& f, const TIME::Evt1j& e);
-ostream& operator<<(ostream& f, const TIME::Evt1jDur& e);
-ostream& operator<<(ostream& f, const TIME::EvtPj& e);
-ostream& operator<<(ostream& f, const TIME::Rdv& e);
+// ostream& operator<<(ostream& f, const TIME::Evt1j& e);
+// ostream& operator<<(ostream& f, const TIME::Evt1jDur& e);
+// ostream& operator<<(ostream& f, const TIME::EvtPj& e);
+// ostream& operator<<(ostream& f, const TIME::Rdv& e);
 
 #endif
